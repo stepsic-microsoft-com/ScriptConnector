@@ -1,0 +1,127 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Script",
+        "description": "A simple connector for executing JavaScript expressions."
+    },
+    "host": "localhost:1337",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "basePath": "/api/data",
+    "paths": {
+        "/script": {
+            "post": {
+                "tags": [
+                    "Script"
+                ],
+                "summary": "Run expression"
+                "description": "Run one or more simple JavaScript expressions. You can pass in an object that contains some context to operate on."
+                "operationId": "runScriptWithSandbox",
+                "consumes": [
+                    "application/json",
+                    "text/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Parameters for running the script.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RunParameters"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    },
+                    "default": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/trigger": {
+            "post": {
+                "tags": [
+                    "Script"
+                ],
+                "summary": "Trigger on expression"
+                "description": "Write a simple expression to determine if the Logic app should trigger. You must return a boolean property called 'trigger' and have it be either true or false."
+                "operationId": "runTriggerScriptWithSandbox",
+                "consumes": [
+                    "application/json",
+                    "text/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "text/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Parameters for running the script.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RunParameters"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    },
+                    "default": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Object"
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "definitions": {
+        "RunParameters": {
+            "type": "object",
+            "properties": {
+                "code": {
+                	"x-ms-summary" : "JavaScript expression",
+                	"description" : "Provide one or more lines of JavaScript code separated by ';'. You can reference any properties you provide in the context object."
+                    "type": "string"
+                },
+                "sandbox": {
+                	"x-ms-summary" : "Context object",
+                	"description" : "Provide a JSON object to use as context inside the code expression."
+                    "$ref": "#/definitions/Object"
+                }
+            }
+        },
+        "Object": {
+             "x-ms-summary" : "Result object",
+             "description" : "The properties that you set in your code will be in this object."
+             "type": "object",
+            "properties" : {}
+        }
+    }
+}
