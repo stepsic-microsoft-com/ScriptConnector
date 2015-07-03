@@ -10,7 +10,6 @@
         "http",
         "https"
     ],
-    "basePath": "/api/data",
     "paths": {
         "/script": {
             "post": {
