@@ -52,9 +52,8 @@ app.post('/api/data/trigger', jsonParser, function(req,res){
 
 app.get('/swagger/docs/v1', function(req,res){
 	var fs = require('fs');
-	var object = fs.readFileSync('api.json','utf8');
-	res.setHeader('Content-Type', 'application/json');
-	res.send(object);
+	var object = JSON.parse(fs.readFileSync('api.json','utf8'));
+	res.json(object);
 });
 
 server.listen(port, baseHost, function () {

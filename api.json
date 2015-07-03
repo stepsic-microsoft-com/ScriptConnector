@@ -17,8 +17,8 @@
                 "tags": [
                     "Script"
                 ],
-                "summary": "Run expression"
-                "description": "Run one or more simple JavaScript expressions. You can pass in an object that contains some context to operate on."
+                "summary": "Run expression",
+                "description": "Run one or more simple JavaScript expressions. You can pass in an object that contains some context to operate on.",
                 "operationId": "runScriptWithSandbox",
                 "consumes": [
                     "application/json",
@@ -61,8 +61,8 @@
                 "tags": [
                     "Script"
                 ],
-                "summary": "Trigger on expression"
-                "description": "Write a simple expression to determine if the Logic app should trigger. You must return a boolean property called 'trigger' and have it be either true or false."
+                "summary": "Trigger on expression",
+                "description": "Write a simple expression to determine if the Logic app should trigger. You must return a boolean property called 'trigger' and have it be either true or false.",
                 "operationId": "runTriggerScriptWithSandbox",
                 "consumes": [
                     "application/json",
@@ -107,19 +107,19 @@
             "properties": {
                 "code": {
                 	"x-ms-summary" : "JavaScript expression",
-                	"description" : "Provide one or more lines of JavaScript code separated by ';'. You can reference any properties you provide in the context object."
+                	"description" : "Provide one or more lines of JavaScript code separated by ';'. You can reference any properties you provide in the context object.",
                     "type": "string"
                 },
                 "sandbox": {
                 	"x-ms-summary" : "Context object",
-                	"description" : "Provide a JSON object to use as context inside the code expression."
+                	"description" : "Provide a JSON object to use as context inside the code expression.",
                     "$ref": "#/definitions/Object"
                 }
             }
         },
         "Object": {
              "x-ms-summary" : "Result object",
-             "description" : "The properties that you set in your code will be in this object."
+             "description" : "The properties that you set in your code will be in this object.",
              "type": "object",
             "properties" : {}
         }
