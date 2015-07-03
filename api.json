@@ -43,13 +43,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Object"
+                            "$ref": "#/definitions/ResultObject"
                         }
                     },
                     "default": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Object"
+                            "$ref": "#/definitions/ResultObject"
                         }
                     }
                 },
@@ -87,17 +87,18 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Object"
+                            "$ref": "#/definitions/ResultObject"
                         }
                     },
                     "default": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Object"
+                            "$ref": "#/definitions/ResultObject"
                         }
                     }
                 },
-                "deprecated": false
+                "deprecated": false,
+                "x-ms-scheduler-trigger" : "poll"
             }
         }
     },
@@ -111,13 +112,17 @@
                     "type": "string"
                 },
                 "sandbox": {
-                	"x-ms-summary" : "Context object",
-                	"description" : "Provide a JSON object to use as context inside the code expression.",
-                    "$ref": "#/definitions/Object"
+                    "$ref": "#/definitions/SandboxObject"
                 }
             }
         },
-        "Object": {
+        "SandboxObject": {
+             "x-ms-summary" : "Context object",
+             "description" : "Provide a JSON object to use as context inside the code expression.",
+             "type": "object",
+            "properties" : {}
+        },
+        "ResultObject": {
              "x-ms-summary" : "Result object",
              "description" : "The properties that you set in your code will be in this object.",
              "type": "object",
