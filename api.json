@@ -61,7 +61,7 @@
                     "Script"
                 ],
                 "summary": "Trigger on expression",
-                "description": "Write a simple expression to determine if the Logic app should trigger. You must return a boolean property called 'trigger' and have it be either true or false.",
+                "description": "Write a simple expression to determine if the Logic app should trigger. If you return false from your expression, the Logic app will not trigger. If you return anything else, it will and you can use the data that is returned.",
                 "operationId": "runTriggerScriptWithSandbox",
                 "consumes": [
                     "application/json",
@@ -124,7 +124,7 @@
         },
         "ResultObject": {
              "x-ms-summary" : "Result object",
-             "description" : "The properties that you set in your code will be in this object.",
+             "description" : "The data that you return from your code. You must include a return statement to have a value be output.",
              "type": "object",
             "properties" : {},
             "additionalProperties" : true

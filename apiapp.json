@@ -3,7 +3,7 @@
     "id": "ScriptApiApp",
     "namespace": "microsoft.com",
     "gateway": "2015-01-14",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "ScriptApiApp",
     "summary": "Allows you to execute basic JavaScript.",
     "author": "",

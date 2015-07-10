@@ -14,13 +14,15 @@ var jsonParser = bodyParser.json();
 
 function executionHandler(isTrigger){
 	return function(req,res){
-	if(!req.body || !req.body.code || !req.body.sandbox){
-		console.log('The request failed because it was missing parameters:\n' + JSON.stringify(req.body));
-		return res.status(400).send('You need to provide code to execute and a sandbox that contains any objects you want to run the code over.');
+	if(!req.body || !req.body.code){
+		console.log('The request failed because it was missing the code:\n' + JSON.stringify(req.body));
+		return res.status(400).send('You need to provide a string of JavaScript code to execute.');
 	}
 	
+	
 	try{
-		var sandbox = req.body.sandbox;
+		var sandbox = req.body.sandbox ? req.body.sandbox : {};
+		
 		var code = "function code(){\n" +  req.body.code + "\n}\n 	var result = code();";
 		try{
 			vm.runInNewContext(code, sandbox);
@@ -35,7 +37,7 @@ function executionHandler(isTrigger){
 
 	}catch(error){
 			console.log('The execution of the JavaScript code:\n' + req.body.code + '\nAnd Context:\n' +  JSON.stringify(req.body.sandbox) + '\nFailed with error:\n' + error);
-			return res.status(400).send('The context must be a string of valid JSON. If you already have a JSON object, you can use the @string() function to convert it to a JSON string.\n\n' + error);
+			return res.status(400).send('Was not able to process the response from the JavaScript code you provided.\n\n' + error);
 		
 	}
 };
