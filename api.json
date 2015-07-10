@@ -119,13 +119,15 @@
              "x-ms-summary" : "Context object",
              "description" : "Provide a JSON object to use as context inside the code expression.",
              "type": "object",
-            "properties" : {}
+            "properties" : {},
+            "additionalProperties" : true
         },
         "ResultObject": {
              "x-ms-summary" : "Result object",
              "description" : "The properties that you set in your code will be in this object.",
              "type": "object",
-            "properties" : {}
+            "properties" : {},
+            "additionalProperties" : true
         }
     }
 }

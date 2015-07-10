@@ -8,7 +8,7 @@
     "summary": "Allows you to execute basic JavaScript.",
     "author": "",
     "endpoints": {
-        "apiDefinition": null,
+        "apiDefinition": "/swagger/docs/v1",
         "status": null
     }
 }
