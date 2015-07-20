@@ -60,8 +60,8 @@
                 "tags": [
                     "Script"
                 ],
-                "summary": "Trigger on expression",
-                "description": "Write a simple expression to determine if the Logic app should trigger. If you return false from your expression, the Logic app will not trigger. If you return anything else, it will and you can use the data that is returned.",
+                "summary": "Evaluate expression",
+                "description": "Write a simple expression to determine if the Logic app should trigger. If you return false from your expression, the Logic app will not run. If you return anything else, it will run, and, you can use the data that is returned inside that run.",
                 "operationId": "runTriggerScriptWithSandbox",
                 "consumes": [
                     "application/json",
