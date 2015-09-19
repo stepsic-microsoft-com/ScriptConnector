@@ -1,133 +1,301 @@
 {
     "swagger": "2.0",
     "info": {
-        "version": "v1",
-        "title": "Script",
-        "description": "A simple connector for executing JavaScript expressions."
+        "title": "LogicApps",
+        "version": "2015-08-01-preview"
     },
-    "host": "localhost:1337",
+    "host": "westus.logic.azure.com",
     "schemes": [
-        "http",
         "https"
     ],
+    "consumes": [
+        "application/json",
+        "text/json"
+    ],
+    "produces": [
+        "application/json",
+        "text/json"
+    ],
     "paths": {
-        "/script": {
+        "/workflows/{workflowId}/triggers/{triggerName}/run": {
             "post": {
                 "tags": [
-                    "Script"
+                    "WorkflowTriggers"
                 ],
-                "summary": "Run expression",
-                "description": "Run one or more simple JavaScript expressions. You can pass in an object that contains some context to operate on.",
-                "operationId": "runScriptWithSandbox",
-                "consumes": [
-                    "application/json",
-                    "text/json"
-                ],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
+                "operationId": "WorkflowTriggers_Run",
+                "description": "Runs a workflow trigger.",
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Parameters for running the script.",
+                        "name": "workflowId",
+                        "description": "The workflow id.",
+                        "in": "path",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RunParameters"
-                        }
+                        "type": "string"
+                    },
+                    {
+                        "name": "triggerName",
+                        "description": "The workflow trigger name.",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "api-version",
+                        "description": "The API version.",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sig",
+                        "description": "The shared access signature.",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/ResultObject"
-                        }
-                    },
-                    "default": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/ResultObject"
-                        }
+                        "description": "OK"
                     }
-                },
-                "deprecated": false
+                }
             }
         },
-        "/trigger": {
-            "post": {
+        "/workflows/{workflowId}/triggers/{triggerName}/definitions/swagger2_0": {
+            "get": {
                 "tags": [
-                    "Script"
+                    "WorkflowTriggers"
                 ],
-                "summary": "Evaluate expression",
-                "description": "Write a simple expression to determine if the Logic app should trigger. If you return false from your expression, the Logic app will not run. If you return anything else, it will run, and, you can use the data that is returned inside that run.",
-                "operationId": "runTriggerScriptWithSandbox",
-                "consumes": [
-                    "application/json",
-                    "text/json"
-                ],
-                "produces": [
-                    "application/json",
-                    "text/json"
-                ],
+                "operationId": "WorkflowTriggers_Schema",
+                "description": "Gets the swagger for a workflow trigger.",
                 "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Parameters for running the script.",
+                        "name": "workflowId",
+                        "description": "The workflow id.",
+                        "in": "path",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/RunParameters"
-                        }
+                        "type": "string"
+                    },
+                    {
+                        "name": "triggerName",
+                        "description": "The workflow trigger name.",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "api-version",
+                        "description": "The API version.",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sig",
+                        "description": "The shared access signature.",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ResultObject"
-                        }
-                    },
-                    "default": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/ResultObject"
+                            "$ref": "#/definitions/WorkflowSchema"
                         }
                     }
-                },
-                "deprecated": false,
-                "x-ms-scheduler-trigger" : "poll"
+                }
             }
         }
     },
     "definitions": {
-        "RunParameters": {
-            "type": "object",
+        "schemaArray": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#" }
+        },
+        "positiveInteger": {
+            "type": "integer",
+            "minimum": 0
+        },
+        "positiveIntegerDefault0": {
+            "allOf": [ { "$ref": "#/definitions/positiveInteger" }, { "default": 0 } ]
+        },
+        "simpleTypes": {
+            "enum": [ "array", "boolean", "integer", "null", "number", "object", "string" ]
+        },
+        "stringArray": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "WorkflowSchema": {
             "properties": {
-                "code": {
-                	"x-ms-summary" : "JavaScript expression",
-                	"description" : "Provide one or more lines of JavaScript code separated by ';'. You can reference any properties you provide in the context object.",
+                "id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "$schema": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "title": {
                     "type": "string"
                 },
-                "sandbox": {
-                    "$ref": "#/definitions/SandboxObject"
+                "description": {
+                    "type": "string"
+                },
+                "default": { },
+                "multipleOf": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                },
+                "maximum": {
+                    "type": "number"
+                },
+                "exclusiveMaximum": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "minimum": {
+                    "type": "number"
+                },
+                "exclusiveMinimum": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "maxLength": {
+                    "$ref": "#/definitions/positiveInteger"
+                },
+                "minLength": {
+                    "$ref": "#/definitions/positiveIntegerDefault0"
+                },
+                "pattern": {
+                    "type": "string",
+                    "format": "regex"
+                },
+                "additionalItems": {
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "$ref": "#"
+                        }
+                    ],
+                    "default": { }
+                },
+                "items": {
+                    "anyOf": [
+                        {
+                            "$ref": "#"
+                        },
+                        {
+                            "$ref": "#/definitions/schemaArray"
+                        }
+                    ],
+                    "default": { }
+                },
+                "maxItems": {
+                    "$ref": "#/definitions/positiveInteger"
+                },
+                "minItems": {
+                    "$ref": "#/definitions/positiveIntegerDefault0"
+                },
+                "uniqueItems": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "maxProperties": {
+                    "$ref": "#/definitions/positiveInteger"
+                },
+                "minProperties": {
+                    "$ref": "#/definitions/positiveIntegerDefault0"
+                },
+                "required": {
+                    "$ref": "#/definitions/stringArray"
+                },
+                "additionalProperties": {
+                    "anyOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "$ref": "#"
+                        }
+                    ],
+                    "default": { }
+                },
+                "definitions": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#"
+                    },
+                    "default": { }
+                },
+                "properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#"
+                    },
+                    "default": { }
+                },
+                "patternProperties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#"
+                    },
+                    "default": { }
+                },
+                "dependencies": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "anyOf": [
+                            {
+                                "$ref": "#"
+                            },
+                            {
+                                "$ref": "#/definitions/stringArray"
+                            }
+                        ]
+                    }
+                },
+                "enum": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/simpleTypes"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/simpleTypes"
+                            },
+                            "minItems": 1,
+                            "uniqueItems": true
+                        }
+                    ]
+                },
+                "allOf": {
+                    "$ref": "#/definitions/schemaArray"
+                },
+                "anyOf": {
+                    "$ref": "#/definitions/schemaArray"
+                },
+                "oneOf": {
+                    "$ref": "#/definitions/schemaArray"
+                },
+                "not": {
+                    "$ref": "#"
                 }
             }
-        },
-        "SandboxObject": {
-             "x-ms-summary" : "Context object",
-             "description" : "Provide a JSON object to use as context inside the code expression.",
-             "type": "object",
-            "properties" : {},
-            "additionalProperties" : true
-        },
-        "ResultObject": {
-             "x-ms-summary" : "Result object",
-             "description" : "The data that you return from your code. You must include a return statement to have a value be output.",
-             "type": "object",
-            "properties" : {},
-            "additionalProperties" : true
         }
     }
 }
